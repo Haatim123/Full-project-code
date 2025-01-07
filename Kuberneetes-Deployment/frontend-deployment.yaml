@@ -1,0 +1,21 @@
+# Frontend (ReactJS)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: frontend-deployment
+spec : 
+  replicas: 3   #no. of pods will be created  
+  selector :
+    matchLabels: 
+      app : frontend   #Ensures deployment targets the correct pods
+  template:   
+    metadata :
+      labels: 
+        app: frontend  #label applied to pods
+    spec:
+      containers: 
+        - name : frontend 
+          image : "your_dockerhub_user/frontend:latest"
+          ports : 
+            - containerPort: 80  

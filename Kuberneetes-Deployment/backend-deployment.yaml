@@ -1,0 +1,22 @@
+# Multi-tier Application (Node.js Backend and React Frontend)
+# Backend (Node.js)
+apiVersion: apps/v1
+kind : Deployment
+metadata : 
+  name : backend-deployment
+spec :
+  replicas : 3
+  selector : 
+    matchLabels :
+      app : backend 
+  template : 
+    metadata :
+      labels :
+        app : backend
+    spec: 
+      containers : 
+        - name : backend
+          image : "your_dockerhub_user/backend:latest"
+          ports : 
+            - containerPort : 3000
+
