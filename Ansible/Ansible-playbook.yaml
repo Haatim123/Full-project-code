@@ -1,0 +1,26 @@
+- name: Deploy Build Files to Nginx Server
+  hosts: nginx
+  tasks:
+    - name: Clean the existing Nginx web root directory
+      file:
+        path: /var/www/html/
+        state: absent
+
+    - name: Recreate the Nginx web root directory
+      file:
+        path: /var/www/html/
+        state: directory
+        mode: '0755'
+
+    - name: Copy build files to the Nginx server
+      copy:
+        src: /path/to/jenkins/workspace/build/
+        dest: /var/www/html/
+        owner: nginx
+        group: nginx
+        mode: '0755'
+
+    - name: Restart Nginx to apply changes
+      service:
+        name: nginx
+        state: restarted
