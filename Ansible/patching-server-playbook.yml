@@ -1,0 +1,28 @@
+---
+- name: Patching Playbook
+  hosts: all
+  tasks:
+    - name: Backup server
+      ansible.builtin.command: tar -czvf /backup/server_backup.tar.gz /important_data
+
+    - name: Store backup in a secure location
+      ansible.builtin.copy:
+        src: /backup/server_backup.tar.gz
+        dest: /secure_location/
+
+    - name: Check current version
+      ansible.builtin.shell: yum list installed | grep "package-name"
+
+    - name: Check volume status
+      ansible.builtin.command: df -h
+
+    - name: Patch the server
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+
+    - name: Restart the server
+      ansible.builtin.reboot:
+
+    - name: Validate the patched server
+      ansible.builtin.command: systemctl status critical-service
