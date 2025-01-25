@@ -27,7 +27,7 @@
          - name: nginx
          - state: present
        Notify: restart_nginx
-       we can write handler block here or we can call it from Roles
+      #  we can write handler block here or we can call it from Roles
 
   handlers: 
     - name: restart_nginx
