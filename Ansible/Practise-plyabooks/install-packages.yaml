@@ -1,0 +1,17 @@
+--- 
+- name: install packages
+  hosts: all 
+  become: true
+  tasks: 
+    - name: install package git
+      apt: 
+       name: git
+       state: present
+    - name: install package vsftpd
+       apt:
+        name: vsftpd
+        state: present 
+    - name: restart vsftpd service
+       service:
+        name:  vsftpd
+        state: restart     

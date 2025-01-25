@@ -1,0 +1,18 @@
+---
+- name: Multi-OS plyabook
+  hosts: all
+  become: yes
+  tasks: 
+    - name: insatll apache on ubuntu
+      apt: 
+        - name: apache
+        - state: present
+      when: ansible_os_family == "Debian"  
+      ignore_errors: true
+
+    - name: install httpd on Red Hat
+      yum: 
+       - name: httpd 
+       - state: present
+      when: ansible_os_family == "RedHat" 
+      ignore_errors: true    

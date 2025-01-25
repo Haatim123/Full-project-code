@@ -1,0 +1,13 @@
+--- 
+- name: Install multiple packages
+  hosts: all
+  become: yes
+  tasks: 
+    - name: update apt cache and make sure vim, curl and unzip are installed
+      apt: 
+        name: "{{item}}"
+        update_cache: yes
+      loop: 
+       - vim 
+       - curl 
+       - unzip   

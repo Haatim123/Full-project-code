@@ -1,0 +1,37 @@
+# Notify and Handlers in Ansible
+# In Ansible, the notify and handlers features work together to ensure that certain actions, such as
+#  restarting a service, are only performed when necessary. This mechanism is efficient and helps avoid unnecessary restarts or operations.
+
+# 1. What is notify?
+# The notify keyword is used in a task to trigger a handler when certain task is performed on target system.
+# Ex: if we install any  package on system and if we want to restart the system we can use notify directive to call handlers.
+
+# 2. What is a Handler?
+# A handler is a special task defined in the handlers section of a playbook or role.
+# Handlers are executed only when notified by other tasks.
+# Handlers run at the end of a play (after all tasks in the play have completed) unless explicitly flushed using meta: flush_handlers.
+
+# 3. How It Works
+# A task modifies a resource (e.g., updates a configuration file).
+# The task uses the notify keyword to call a handler by name.
+# If the task causes a change, the handler is queued to run at the end of the play.
+
+ ---
+ - name: Execute notify and Handler
+   hosts: all
+   become: true
+  #  gathering_facts: false
+   tasks:
+     - name: insatll nginx latest version
+       yum: 
+         - name: nginx
+         - state: present
+       Notify: restart_nginx
+       we can write handler block here or we can call it from Roles
+
+  handlers: 
+    - name: restart_nginx
+      become: true
+      service:
+        - name: nginx
+          state: started       
